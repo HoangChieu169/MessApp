@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "486594627243",
+    "firebase_url": "https://messkotlin.firebaseio.com",
+    "project_id": "messkotlin",
+    "storage_bucket": "messkotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486594627243:android:93a1bb9aff24d79dc9d9ee",
+        "android_client_info": {
+          "package_name": "com.example.messsger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486594627243-4q5b03jibq7neoumj8jgb7ci8p174kc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxI-fu2OHcmbtiHkCAD99Z-BCYzdHGdVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486594627243-4q5b03jibq7neoumj8jgb7ci8p174kc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
