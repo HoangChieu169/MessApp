@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "486594627243",
-    "firebase_url": "https://messkotlin.firebaseio.com",
-    "project_id": "messkotlin",
-    "storage_bucket": "messkotlin.appspot.com"
+    "project_number": "932943834468",
+    "firebase_url": "https://messenger-32105.firebaseio.com",
+    "project_id": "messenger-32105",
+    "storage_bucket": "messenger-32105.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486594627243:android:93a1bb9aff24d79dc9d9ee",
+        "mobilesdk_app_id": "1:932943834468:android:6be36669b3cc52b0",
         "android_client_info": {
-          "package_name": "com.example.messsger"
+          "package_name": "com.example.messenger"
         }
       },
       "oauth_client": [
         {
-          "client_id": "486594627243-4q5b03jibq7neoumj8jgb7ci8p174kc4.apps.googleusercontent.com",
+          "client_id": "932943834468-u4d4bm9aq0r1hcdqoffh2guolroekjtt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCxI-fu2OHcmbtiHkCAD99Z-BCYzdHGdVA"
+          "current_key": "AIzaSyByA8oxJeOHBvSyo3jy-1W0hyTLS6U84B0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "486594627243-4q5b03jibq7neoumj8jgb7ci8p174kc4.apps.googleusercontent.com",
+              "client_id": "932943834468-u4d4bm9aq0r1hcdqoffh2guolroekjtt.apps.googleuserc ontent.com",
               "client_type": 3
             }
           ]
