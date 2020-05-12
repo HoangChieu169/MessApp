@@ -1,4 +1,4 @@
-package com.example.messenger
+package com.example.messenger.registerlogin
 
 import android.app.Activity
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.example.messenger.R
+import com.example.messenger.messages.LatestMessagesActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -110,7 +112,11 @@ class RegisterActivity : AppCompatActivity() {
     private  fun saveUserToFirebaseDatabase(profileImageUrl:String){
         val uid = FirebaseAuth.getInstance().uid ?:""
        val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")
-        val  user = User(uid,name_editText.text.toString(),profileImageUrl)
+        val  user = User(
+            uid,
+            name_editText.text.toString(),
+            profileImageUrl
+        )
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("RegisterActivity","Finally we saved the  user to Firebase Database")
@@ -122,6 +128,10 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d(TAG,"Failed to set value to database :${it.message}")
             }
     }
+
 }
 
-class  User (var uid :String, val username :String , val profileImageUrl: String)
+class  User (var uid :String, val username :String , val profileImageUrl: String){
+    constructor(): this("","","")
+
+}

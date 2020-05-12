@@ -3,27 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    >
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="102dp"
-        android:layout_height="26dp"
+        android:id="@+id/textView_user_newmessger"
+        android:layout_width="292dp"
+        android:layout_height="35dp"
         android:text="Username"
         android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/imageButton"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_newMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView_newMessage" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageButton"
+        android:id="@+id/imageView_newMessage"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_user_newmessger"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fui_ic_github_white_24dp" />
+        app:srcCompat="@android:drawable/btn_dialog" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
