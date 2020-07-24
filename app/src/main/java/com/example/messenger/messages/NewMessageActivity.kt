@@ -1,5 +1,6 @@
 package com.example.messenger.messages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +51,7 @@ class NewMessageActivity : AppCompatActivity() {
                     }
                 }
                 adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(view.context)
                     
                 }
                 recyclerView_newmessage.adapter = adapter
