@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editText_ChatLog"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_register_login"
+        android:ems="10"
+        android:hint="Enter Message"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_send_chatlog"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_send_chatlog"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_buttom_register_login"
+        android:text="SEND"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FBFBFB"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText_ChatLog" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_chat_log"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_blue_light"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_ChatLog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166" />
+</androidx.constraintlayout.widget.ConstraintLayout>
