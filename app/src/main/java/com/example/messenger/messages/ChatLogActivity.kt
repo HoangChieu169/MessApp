@@ -1,6 +1,7 @@
 package com.example.messenger.messages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.messenger.R
 import com.xwray.groupie.GroupAdapter
@@ -38,6 +39,7 @@ class  ChatItem : Item<ViewHolder>(){
 }
 class  ChatToItem : Item<ViewHolder>(){
     override fun getLayout(): Int {
+        Log.d("chieuhv","Huylol")
         return R.layout.chat_to_rom
     }
 
