@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.messenger.R
 import com.example.messenger.messages.LatestMessagesActivity
+import com.example.messenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 @Suppress("DEPRECATION")
-class RegisterActivity : AppCompatActivity() {
+ class RegisterActivity : AppCompatActivity() {
     companion object{
         val TAG = "RegisterActivity"
     }
@@ -130,8 +131,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 }
-
-class  User (var uid :String, val username :String , val profileImageUrl: String){
-    constructor(): this("","","")
-
-}
+// class  User (var uid :String, val username :String , val profileImageUrl: String){
+//    constructor(): this("","","")
+//
+//}

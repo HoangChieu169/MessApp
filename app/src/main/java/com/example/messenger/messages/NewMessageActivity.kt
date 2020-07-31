@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.messenger.R
-import com.example.messenger.registerlogin.User
+import com.example.messenger.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,7 +17,7 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
-class NewMessageActivity : AppCompatActivity() {
+ class NewMessageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,9 @@ class NewMessageActivity : AppCompatActivity() {
 //        recyclerView_newmessage.adapter=adapter
          fetchUser()
     }
-
+     companion object{
+         val USER_KEY ="USER_KEY"
+     }
     private fun fetchUser() {
         val ref = FirebaseDatabase.getInstance().getReference("/user")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -51,7 +53,10 @@ class NewMessageActivity : AppCompatActivity() {
                     }
                 }
                 adapter.setOnItemClickListener { item, view ->
+                    val userItem = item as UserItem
                    val intent = Intent(view.context,ChatLogActivity::class.java)
+//                    intent.putExtra(USER_KEY,userItem.user.username)
+                    intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
                     finish()
                 }
@@ -61,7 +66,7 @@ class NewMessageActivity : AppCompatActivity() {
     }
 
 }
-    class UserItem(val user: User): Item<ViewHolder>(){
+  class UserItem(val user: User): Item<ViewHolder>(){
         override fun getLayout(): Int {
             return R.layout.user_row_new_message
         }
