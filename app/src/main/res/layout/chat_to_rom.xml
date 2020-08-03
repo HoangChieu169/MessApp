@@ -10,18 +10,21 @@
         android:id="@+id/text_to_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_register_login"
+        android:gravity="center_vertical"
+        android:text="Nhieu khi deo hieu tai sao may lai deo hien thi ha chan deo buon noi"
+        android:maxWidth="240dp"
+        android:textSize="18sp"
         android:paddingLeft="@dimen/_8sdp"
-        android:text="TextView"
+        android:paddingRight="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_chat_to_rom"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516" />
+        app:layout_constraintTop_toTopOf="@+id/imageView_chat_to_rom"
+        app:layout_constraintVertical_bias="0.347" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_chat_to_rom"
@@ -38,5 +41,5 @@
         app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_rom.view.*
 
 class ChatLogActivity:AppCompatActivity() {
-    val  adapter = GroupAdapter<ViewHolder>()
+    val adapter = GroupAdapter<ViewHolder>()
     var toUser: User? = null
 
 
@@ -33,9 +33,6 @@ class ChatLogActivity:AppCompatActivity() {
         supportActionBar?.title = toUser?.username
 //        setupDummyData()
         listFormMessage()
-
-
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         button_send_chatlog.setOnClickListener {
             Log.d("chieuhv", " Đã bấm đang send")
             perfromSendMessage()
@@ -44,7 +41,9 @@ class ChatLogActivity:AppCompatActivity() {
     }
 
     private fun listFormMessage() {
-        val ref = FirebaseDatabase.getInstance().getReference("/mess")
+        val formID = FirebaseAuth.getInstance().uid
+        val toID = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-mess/$formID/$toID")
         ref.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
@@ -54,21 +53,25 @@ class ChatLogActivity:AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
+
+
+
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
+          Log.d("cheuhv"," Hi")
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
-                if (chatMessage !=null){
-                    if (chatMessage.formID == FirebaseAuth.getInstance().uid){
-                        val current = LatestMessagesActivity.currentUser ?: return
-                        adapter.add(ChatItem(chatMessage.text,current!!))
-                    }else{
-
-                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
-                    }
                 Log.d("chieuhv", chatMessage?.text)
+                if (chatMessage != null) {
+                    if (chatMessage.formID == FirebaseAuth.getInstance().uid) {
+                        val currentUser = LatestMessagesActivity.currentUser ?: return
+                        adapter.add(ChatItem(chatMessage.text,currentUser))
+                    } else {
+                            val toUser=intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+                        adapter.add(ChatToItem(chatMessage.text,toUser))
+                    }
+                    Log.d("chieuhv", chatMessage?.text)
 
                 }
             }
@@ -85,7 +88,10 @@ class ChatLogActivity:AppCompatActivity() {
         val formID = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toID = user.uid
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val reference =
+            FirebaseDatabase.getInstance().getReference("/user-messages/$formID/$toID").push()
+        val toreference =
+            FirebaseDatabase.getInstance().getReference("/user-messages/$toID/$formID").push()
         if (formID == null) return
 
         val chatMessage = ChatMessage(
@@ -95,50 +101,50 @@ class ChatLogActivity:AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d("chieuhv", "truyen text : ${reference.key}")
             }
-
+        toreference.setValue(chatMessage)
     }
 
 //    private fun setupDummyData(){
 //
-//        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-//        supportActionBar?.title = user.uid
+////        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+////        supportActionBar?.title = user.uid
 //        val adapter = GroupAdapter<ViewHolder>()
 //
-//        adapter.add(ChatItem())
-//        adapter.add(ChatToItem())
-//        adapter.add(ChatItem())
-//        adapter.add(ChatToItem())
-//
+//        adapter.add(ChatItem("hello"))
+//        adapter.add(ChatToItem("hi word"))
+//        adapter.add(ChatItem("hi cái đéo gì ảnh\n ảnh còn đéo hiện kia"))
+//        adapter.add(ChatToItem("không phải xoắn nó khác hiện \n làm từ từ thôi mày đang làm\n nhanh quá kìa"))
 //
 //        recyclerView_chat_log.adapter = adapter
 //    }
-//
-//}
+////
 }
-class  ChatItem(val text:String, val user: User) : Item<ViewHolder>(){
-    override fun getLayout(): Int {
-        return R.layout.chat_from_row
+
+    class ChatItem(val text: String,val user: User) : Item<ViewHolder>() {
+        override fun getLayout(): Int {
+            return R.layout.chat_from_row
+        }
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+            viewHolder.itemView.text_from_row.text = text
+            val uri = user.profileImageUrl
+            val targetImageView = viewHolder.itemView.imageView_chat_form_row
+            Picasso.get().load(uri).into(targetImageView)
+        }
+
     }
 
-    override fun bind   (viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.text_from_row.text = "From Message ......"
-        val uri = user.profileImageUrl
-        val targetImageView = viewHolder.itemView.imageView_chat_form_row
-        Picasso.get().load(uri).into(targetImageView)
-    }
+    class ChatToItem(val text: String, val user: User) : Item<ViewHolder>() {
+        override fun getLayout(): Int {
+            Log.d("chieuhv", "Huylol")
+            return R.layout.chat_to_rom
+        }
 
-}
-class  ChatToItem(val text: String, val user: User) : Item<ViewHolder>(){
-    override fun getLayout(): Int {
-        Log.d("chieuhv","Huylol")
-        return R.layout.chat_to_rom
-    }
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+            viewHolder.itemView.text_to_row.text = text
+            val uri = user.profileImageUrl
+            val targetImageView = viewHolder.itemView.imageView_chat_to_rom
+            Picasso.get().load(uri).into(targetImageView)
+        }
 
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.text_to_row.text="This is the to row text message is longer ..."
-        val uri = user.profileImageUrl
-        val targetImageView = viewHolder.itemView.imageView_chat_to_rom
-        Picasso.get().load(uri).into(targetImageView)
     }
-
-}
