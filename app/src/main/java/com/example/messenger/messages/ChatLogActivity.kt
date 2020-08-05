@@ -7,10 +7,7 @@ import com.example.messenger.R
 import com.example.messenger.models.ChatMessage
 import com.example.messenger.models.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -20,6 +17,10 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_rom.view.*
 
 class ChatLogActivity:AppCompatActivity() {
+    companion object{
+        val TAG = "ChatLog"
+    }
+
     val adapter = GroupAdapter<ViewHolder>()
     var toUser: User? = null
 
@@ -40,29 +41,41 @@ class ChatLogActivity:AppCompatActivity() {
     }
 
     private fun listFormMessage() {
-      val ref = FirebaseDatabase.getInstance().getReference("message")
-        ref.addChildEventListener(object :ChildEventListener{
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-              val chatMessages =p0.getValue(ChatMessage::class.java)
-                Log.d("chieuhv","tin nhan : "+ chatMessages?.text)
+        val formID = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+     val ref= FirebaseDatabase.getInstance().getReference("/user_messages/$formID/$toId")
+    ref.addChildEventListener(object :ChildEventListener{
+        override fun onCancelled(p0: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+           val chatMessage = p0.getValue(ChatMessage::class.java)
+            Log.d(TAG,chatMessage?.text)
+            if (chatMessage !=null){
+                if (chatMessage.formId == FirebaseAuth.getInstance().uid){
+                    val currentUser = LatestMessagesActivity.currentUser ?:return
+                    adapter.add(ChatItem(chatMessage.text,currentUser))
+                }else{
+                    adapter.add(ChatToItem(chatMessage.text,toUser!!))
+                }
+
             }
 
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+        }
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-            override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        override fun onChildRemoved(p0: DataSnapshot) {
+            TODO("Not yet implemented")
+        }
+    })
     }
 
     private fun perfromSendMessage() {
@@ -70,37 +83,22 @@ class ChatLogActivity:AppCompatActivity() {
         val formID = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toID = user.uid
-        val reference =
-            FirebaseDatabase.getInstance().getReference("/user-messages").push()
-////        val toreference =
-////            FirebaseDatabase.getInstance().getReference("/user-messages/$toID/$formID").push()
+        val reference = FirebaseDatabase.getInstance().getReference("/user_messages/$formID/$toID").push()
+        val toreference = FirebaseDatabase.getInstance().getReference("/user-messages/$toID/$formID").push()
         if (formID == null) return
-
         val chatMessage = ChatMessage(reference.key!!,text,formID,toID,System.currentTimeMillis()/1000)
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("chieuhv", "truyen id : ${reference.key}")
+                editText_ChatLog.text.clear()
+                recyclerView_chat_log.scrollToPosition(adapter.itemCount -1)
             }
-//        toreference.setValue(chatMessage)
+        toreference.setValue(chatMessage)
     }
 
-//    private fun setupDummyData(){
-//
-////        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-////        supportActionBar?.title = user.uid
-//        val adapter = GroupAdapter<ViewHolder>()
-//
-//        adapter.add(ChatItem("hello"))
-//        adapter.add(ChatToItem("hi word"))
-//        adapter.add(ChatItem("hi cái đéo gì ảnh\n ảnh còn đéo hiện kia"))
-//        adapter.add(ChatToItem("không phải xoắn nó khác hiện \n làm từ từ thôi mày đang làm\n nhanh quá kìa"))
-//
-//        recyclerView_chat_log.adapter = adapter
-//    }
-////
 }
 
-    class ChatItem(val text: String,val user: User) : Item<ViewHolder>() {
+    class ChatItem(val text: String, val user: User) : Item<ViewHolder>() {
         override fun getLayout(): Int {
             return R.layout.chat_from_row
         }
