@@ -69,6 +69,7 @@ class ChatLogActivity:AppCompatActivity() {
                 }
 
             }
+            recyclerView_chat_log.scrollToPosition(adapter.itemCount-1)
 
         }
 
@@ -94,6 +95,10 @@ class ChatLogActivity:AppCompatActivity() {
                 recyclerView_chat_log.scrollToPosition(adapter.itemCount -1)
             }
         toreference.setValue(chatMessage)
+        val latesMessageRef =  FirebaseDatabase.getInstance().getReference("/lates-message/$formID/$toID")
+        latesMessageRef.setValue(chatMessage)
+        val latesMessageToRef =  FirebaseDatabase.getInstance().getReference("/lates-message/$toID/$formID")
+        latesMessageToRef.setValue(chatMessage)
     }
 
 }
